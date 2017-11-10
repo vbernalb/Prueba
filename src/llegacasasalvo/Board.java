@@ -31,6 +31,7 @@ public class Board extends JPanel implements ActionListener {
     
     
     private Personaje personaje;
+    private Logica logica;
     private int secuencia;
     private Timer timer;
     private int cont;
@@ -46,6 +47,7 @@ public class Board extends JPanel implements ActionListener {
         
         this.mv = 0;
         this.personaje = new Personaje();
+        this.logica = new Logica();
         this.secuencia=0;
         this.timer = new Timer(10, this);
         this.cont =0;
@@ -65,28 +67,7 @@ public class Board extends JPanel implements ActionListener {
         return image;
     }
     
-    public int numeroA (){ // Genera valor aleatorio para imagen
-         int valorEntero = (int) Math.floor(Math.random()*(5));
-        return valorEntero;
-    }
-    
-    public int numeroB (){ //Genera valor aleatorio para posicion
-         int valorEntero = (int) Math.floor(Math.random()*(3));
-        return valorEntero;
-    }
-    
-    public int Pos (int a){ //Centra los personajes
-        if(a==0){
-            return (a*200)+28;
-        }else if(a==1){
-            return (a*200)+80;
-        }else{
-            return (a*200)+125;
-        }
-    }
-    
-
-
+ 
     
 
 
@@ -97,43 +78,46 @@ public class Board extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.drawRect(personaje.getX(),personaje.getY(),200,200);
         Rectangle man1 = new Rectangle(personaje.getX(),personaje.getY(),200,200);
+        int P = logica.Pos(posicion);
         if (imagen==0){
             Image ladron = loadImage("thie sprit.jpg");
-            g.drawImage(ladron, coo , Pos(posicion),coo-200, Pos(posicion)+200,0,0,200, 200, this);
-            g.drawRect(coo-200,Pos(posicion),200,200);
-            Rectangle ladronR = new Rectangle(coo-200,Pos(posicion),200,200);
+            g.drawImage(ladron, coo , P,coo-200, P+200,0,0,200, 200, this);
+            g.drawRect(coo-200,P,200,200);
+            Rectangle ladronR = new Rectangle(coo-200,P,200,200);
             if(man1.intersects(ladronR)){
+                g.setColor(Color.yellow);  //AQUI ESTOY TRATANDO DE CAMBIAR EL COLOR :C
+                g.drawString("¡Oh no, te han robado!", 630, 360);
                 this.timer.stop();
         }
         }if (imagen==1){
             Image mierda = loadImage("mierda.jpeg");
-            g.drawImage(mierda, coo ,Pos(posicion),coo-200, Pos(posicion)+200,0,0,200, 200, this);
-            g.drawRect(coo-200,Pos(posicion),200,200);
-            Rectangle mierdaR = new Rectangle(coo-200,Pos(posicion),200,200);
+            g.drawImage(mierda, coo ,P,coo-200, P+200,0,0,200, 200, this);
+            g.drawRect(coo-200,P,200,200);
+            Rectangle mierdaR = new Rectangle(coo-200,P,200,200);
             if(man1.intersects(mierdaR)){
                 this.timer.stop();
             }
         }if(imagen==2){
             Image hueco = loadImage("hueco.jpg");
-            g.drawImage(hueco, coo , Pos(posicion),coo-200,Pos(posicion)+200,0,0,200, 200, this);
-            g.drawRect(coo-200,Pos(posicion),200,200);
-            Rectangle huecoR = new Rectangle(coo-200,Pos(posicion),200,200);
+            g.drawImage(hueco, coo , P,coo-200,P+200,0,0,200, 200, this);
+            g.drawRect(coo-200,P,200,200);
+            Rectangle huecoR = new Rectangle(coo-200,P,200,200);
             if(man1.intersects(huecoR)){
                 this.timer.stop();
             }
         }if(imagen==3){
             Image rata = loadImage("Rata.jpg");
-            g.drawImage(rata, coo , Pos(posicion),coo-200,Pos(posicion)+200,0,0,200, 200, this);
-            g.drawRect(coo-200,Pos(posicion),200,200);
-            Rectangle rataR = new Rectangle(coo-200,Pos(posicion),200,200);
+            g.drawImage(rata, coo , P,coo-200,P+200,0,0,200, 200, this);
+            g.drawRect(coo-200,P,200,200);
+            Rectangle rataR = new Rectangle(coo-200,P,200,200);
             if(man1.intersects(rataR)){
                 this.timer.stop();
             }     
         }if (imagen==4){
             Image alcantarilla = loadImage("alcantarilla.jpg");
-            g.drawImage(alcantarilla, coo , Pos(posicion),coo-200,Pos(posicion)+200,0,0,200, 200, this);
-            g.drawRect(coo-200,Pos(posicion),200,200);
-            Rectangle alcantarillaR = new Rectangle(coo-200,Pos(posicion),200,200);
+            g.drawImage(alcantarilla, coo , P,coo-200,P+200,0,0,200, 200, this);
+            g.drawRect(coo-200,P,200,200);
+            Rectangle alcantarillaR = new Rectangle(coo-200,P,200,200);
             if(man1.intersects(alcantarillaR)){
                 this.timer.stop();
             }
@@ -158,12 +142,12 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.cont +=10;
-        if(this.cont%1300==0){
+        if(this.cont%1000==0){
             this.cont=0;
             this.ac ++;
             this.coo.add(1542); //Coordenada final en X
-            this.img.add(numeroA()); // Valor aleatorio para imagen
-            this.pos.add(numeroB()); // Valor aleatorio para posicion
+            this.img.add(logica.numeroA()); // Valor aleatorio para imagen
+            this.pos.add(logica.numeroB()); // Valor aleatorio para posicion
         }
 
         int a = 0;

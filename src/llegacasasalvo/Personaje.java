@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 public class Personaje implements KeyListener{
         private int y;
         private int yi2;
-        private int yc;
+        private int yc; //variable de copia
         private int x;
     
         public Personaje(){
@@ -30,10 +30,6 @@ public class Personaje implements KeyListener{
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-    
     public void moverx (int tiempo){ //Mueve al personaje en X
         if(tiempo>5000 && this.x<200){
             this.x += 1;
@@ -59,7 +55,7 @@ public class Personaje implements KeyListener{
 
             
         @Override
-        public void keyPressed (KeyEvent e){
+        public void keyPressed (KeyEvent e){ //Cuando se oprime la tecla
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_UP){
                 this.yi2 =- 10;
@@ -71,7 +67,7 @@ public class Personaje implements KeyListener{
     }
     
         @Override
-    public void keyReleased (KeyEvent e){
+    public void keyReleased (KeyEvent e){ // Cuando se suelta la tecla
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_UP){
                 this.yi2 = 0;
@@ -81,8 +77,6 @@ public class Personaje implements KeyListener{
         }
             
     }
-    
-    
 
     public int getY() {
         return y;
@@ -91,9 +85,4 @@ public class Personaje implements KeyListener{
     @Override
     public void keyTyped(KeyEvent ke) {
     }
-
-
-    
-    
-    
 }
